@@ -8,7 +8,7 @@ function Navbar() {
                 Projects
             </a>
             <a
-                href="#"
+                href="/addProject"
                 className="hover:bg-pink-700 w-8 rounded-full flex items-center justify-center font-mono"
             >
                 <Icon name="add" />
