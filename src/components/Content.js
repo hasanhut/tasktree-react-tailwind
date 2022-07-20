@@ -13,7 +13,7 @@ function Content() {
     }, []);
 
     return (
-        <div className="flex flex-auto h-full">
+        <div className="grid grid-cols-4 gap-2">
             {data?.map((item) => (
                 <span
                     key={item.id}
