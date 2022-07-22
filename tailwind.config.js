@@ -8,6 +8,7 @@ module.exports = {
         extend: {
             colors: {
                 projectgray: "#566E7A",
+                projectgraybold: "#324047",
                 projectwhite: "#FFFFFF",
             },
         },
