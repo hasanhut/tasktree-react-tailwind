@@ -5,22 +5,30 @@ import axios from "axios";
 
 function Content() {
     const [data, setData] = useState(null);
-
+    const url = "https://localhost:7274/api/project";
+    const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiJjMWQxZjU4Mi0wZTgwLTQ0NGUtOWIwMS1jYjA0YTk1OTY2ZTYiLCJpYXQiOiIyNy4wNy4yMDIyIDExOjA2OjE2IiwiSWQiOiIxIiwiVXNlcm5hbWUiOiJoYXNhbiIsIkVtYWlsIjoiaGFzYW5AZ21haWwuY29tIiwiZXhwIjoxNjY0OTE5OTE2LCJpc3MiOiJKV1RBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkpXVFNlcnZpY2VQb3N0bWFuQ2xpZW50In0.nug5iBXCEluxqapzT0jk7AgDK-rclAx5-XaSXw3gIg8";
     useEffect(() => {
-        const url = "https://localhost:7274/api/project";
         const fetchData = async () => {
-            const res = await fetch(url);
-            const json = await res.json();
-            setData(json);
+            axios
+                .get(url, {
+                    headers: { Authorization: `Bearer ${token}` },
+                })
+                .then((res) => {
+                    setData(res.data);
+                });
         };
         fetchData();
     }, []);
 
     function deleteProject(id) {
-        axios.delete(`https://localhost:7274/api/project/${id}`).then((res) => {
-            const data = this.state.data.filter((item) => item.id !== id);
-            this.setState({ data });
-        });
+        axios
+            .delete(`https://localhost:7274/api/project/${id}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((res) => {
+                data.filter((item) => item.id !== id);
+            });
     }
 
     return (

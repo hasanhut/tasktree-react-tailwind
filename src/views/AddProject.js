@@ -1,27 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const url = "https://localhost:7274/api/project";
+const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiJjMWQxZjU4Mi0wZTgwLTQ0NGUtOWIwMS1jYjA0YTk1OTY2ZTYiLCJpYXQiOiIyNy4wNy4yMDIyIDExOjA2OjE2IiwiSWQiOiIxIiwiVXNlcm5hbWUiOiJoYXNhbiIsIkVtYWlsIjoiaGFzYW5AZ21haWwuY29tIiwiZXhwIjoxNjY0OTE5OTE2LCJpc3MiOiJKV1RBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkpXVFNlcnZpY2VQb3N0bWFuQ2xpZW50In0.nug5iBXCEluxqapzT0jk7AgDK-rclAx5-XaSXw3gIg8";
 
 function AddProject() {
     const [name, setName] = useState("");
     const [explanation, setExplanation] = useState("");
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const history = useNavigate();
+
     const postData = (e) => {
         e.preventDefault();
 
         axios
-            .post(url, {
-                name,
-                explanation,
-                startDate,
-                endDate,
-            })
+            .post(
+                url,
+                {
+                    name,
+                    explanation,
+                    startDate,
+                    endDate,
+                },
+                { headers: { Authorization: `Bearer ${token}` } }
+            )
             .then((res) => {
                 console.log("Posting data :", res);
             })
             .catch((err) => console.log(err));
+        history("/");
     };
 
     return (
