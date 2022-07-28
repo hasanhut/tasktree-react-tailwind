@@ -2,13 +2,11 @@ import { React, useState } from "react";
 import axios from "axios";
 
 const url = "https://localhost:7274/api/user";
-const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiJhZmIxZmJlZi1lYWMwLTRkOTgtYTEzNi1mN2U4OWE0OThiMTQiLCJpYXQiOiIyNy4wNy4yMDIyIDEwOjE2OjQ0IiwiSWQiOiIxIiwiVXNlcm5hbWUiOiJoYXNhbiIsIkVtYWlsIjoiaGFzYW5AZ21haWwuY29tIiwiZXhwIjoxNjU4OTE3NjA0LCJpc3MiOiJKV1RBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkpXVFNlcnZpY2VQb3N0bWFuQ2xpZW50In0.1eayTirCLSeLcG1FBenUv-XgqYuC_3fU_HSfPPqY4r8";
 
 function Register() {
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [username, setUsername] = useState("");
 
     const register = (e) => {
         e.preventDefault();
@@ -38,7 +36,7 @@ function Register() {
                         </a>
                     </p>
                 </div>
-                <form className="mt-8 space-y-6" action="">
+                <form className="mt-8 space-y-6" action="#">
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div>
                             <label htmlFor="username" className="sr-only">
@@ -49,7 +47,7 @@ function Register() {
                                 id="username"
                                 name="username"
                                 onChange={(e) => setUsername(e.target.value)}
-                                //required
+                                required
                                 className="appearance-none rounded-none relative block
                   w-full px-3 py-2 border border-gray-300
                   placeholder-gray-500 text-gray-900 rounded-t-md
@@ -67,7 +65,7 @@ function Register() {
                                 id="email"
                                 name="email"
                                 onChange={(e) => setEmail(e.target.value)}
-                                //required
+                                required
                                 className="appearance-none rounded-none relative block
                   w-full px-3 py-2 border border-gray-300
                   placeholder-gray-500 text-gray-900 rounded-t-md
@@ -83,9 +81,9 @@ function Register() {
                             <input
                                 id="password"
                                 name="password"
-                                type="text"
+                                type="password"
                                 autoComplete="current-password"
-                                //required
+                                required
                                 className="appearance-none rounded-none relative block
                   w-full px-3 py-2 border border-gray-300
                   placeholder-gray-500 text-gray-900 rounded-b-md
@@ -99,7 +97,7 @@ function Register() {
 
                     <div>
                         <button
-                            onSubmit={register}
+                            onClick={register}
                             className="group relative w-full flex justify-center
                 py-2 px-4 border border-transparent text-sm font-medium
                 rounded-md text-white bg-indigo-600 hover:bg-indigo-700

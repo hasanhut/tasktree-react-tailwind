@@ -1,12 +1,17 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 const url = "https://localhost:7274/api/";
 
 function Login() {
+    const userRef = useRef();
+    const errRef = useRef();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [token, setToken] = useState("");
+    const [errMsg, setErrMsg] = useState("");
+    const [success, setSuccess] = useState(false);
 
     const authorize = (e) => {
         e.preventDefault();
@@ -14,120 +19,143 @@ function Login() {
             .post(url + "token", { email, password })
             .then((res) => {
                 setToken(res.data);
+                console.log(res.data);
+                setSuccess(true);
             })
             .catch((err) => {
                 console.log("Invalid Credentials");
             });
     };
     return (
-        <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8">
-                <div>
-                    <img
-                        className="mx-auto h-12 w-auto"
-                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                        alt="Workflow"
-                    />
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Sign in to your account
-                    </h2>
-                    <p className="mt-2 text-center text-sm text-gray-600">
-                        Or{" "}
-                        <a
-                            href="/register"
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
-                        >
-                            sign up a new account
-                        </a>
-                    </p>
-                </div>
-                <form className="mt-8 space-y-6" action="#" method="POST">
-                    <input type="hidden" name="remember" defaultValue="true" />
-                    <div className="rounded-md shadow-sm -space-y-px">
+        <>
+            {success ? (
+                <h1> You are logged in ! </h1>
+            ) : (
+                <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-md w-full space-y-8">
                         <div>
-                            <label htmlFor="email" className="sr-only">
-                                Email
-                            </label>
+                            <img
+                                className="mx-auto h-12 w-auto"
+                                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                                alt="Workflow"
+                            />
+                            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                                Sign in to your account
+                            </h2>
+                            <p className="mt-2 text-center text-sm text-gray-600">
+                                Or{" "}
+                                <a
+                                    href="/register"
+                                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                                >
+                                    sign up a new account
+                                </a>
+                            </p>
+                        </div>
+                        <form
+                            className="mt-8 space-y-6"
+                            action="#"
+                            method="POST"
+                        >
                             <input
-                                type="text"
-                                id="email"
-                                name="email"
-                                autoComplete="email"
-                                onChange={(e) => setEmail(e.target.value)}
-                                //required
-                                className="appearance-none rounded-none relative block
+                                type="hidden"
+                                name="remember"
+                                defaultValue="true"
+                            />
+                            <div className="rounded-md shadow-sm -space-y-px">
+                                <div>
+                                    <label htmlFor="email" className="sr-only">
+                                        Email
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="email"
+                                        name="email"
+                                        autoComplete="email"
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
+                                        //required
+                                        className="appearance-none rounded-none relative block
                   w-full px-3 py-2 border border-gray-300
                   placeholder-gray-500 text-gray-900 rounded-t-md
                   focus:outline-none focus:ring-indigo-500
                   focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Email-address"
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="password" className="sr-only">
-                                Password
-                            </label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                autoComplete="current-password"
-                                //required
-                                className="appearance-none rounded-none relative block
+                                        placeholder="Email-address"
+                                    />
+                                </div>
+                                <div>
+                                    <label
+                                        htmlFor="password"
+                                        className="sr-only"
+                                    >
+                                        Password
+                                    </label>
+                                    <input
+                                        id="password"
+                                        name="password"
+                                        type="password"
+                                        autoComplete="current-password"
+                                        //required
+                                        className="appearance-none rounded-none relative block
                   w-full px-3 py-2 border border-gray-300
                   placeholder-gray-500 text-gray-900 rounded-b-md
                   focus:outline-none focus:ring-indigo-500
                   focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Password"
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                    </div>
+                                        placeholder="Password"
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
+                                    />
+                                </div>
+                            </div>
 
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <input
-                                id="remember-me"
-                                name="remember-me"
-                                type="checkbox"
-                                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center">
+                                    <input
+                                        id="remember-me"
+                                        name="remember-me"
+                                        type="checkbox"
+                                        className="h-4 w-4 text-indigo-600 focus:ring-indigo-500
                   border-gray-300 rounded"
-                            />
-                            <label
-                                htmlFor="remember-me"
-                                className="ml-2 block text-sm text-gray-900"
-                            >
-                                Remember me
-                            </label>
-                        </div>
+                                    />
+                                    <label
+                                        htmlFor="remember-me"
+                                        className="ml-2 block text-sm text-gray-900"
+                                    >
+                                        Remember me
+                                    </label>
+                                </div>
 
-                        <div className="text-sm">
-                            <a
-                                href="#"
-                                className="font-medium text-indigo-600 hover:text-indigo-500"
-                            >
-                                Forgot your password?
-                            </a>
-                        </div>
-                    </div>
+                                <div className="text-sm">
+                                    <a
+                                        href="#"
+                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                    >
+                                        Forgot your password?
+                                    </a>
+                                </div>
+                            </div>
 
-                    <div>
-                        <button
-                            type="submit"
-                            onClick={authorize}
-                            className="group relative w-full flex justify-center
+                            <div>
+                                <button
+                                    type="submit"
+                                    onClick={authorize}
+                                    className="group relative w-full flex justify-center
                 py-2 px-4 border border-transparent text-sm font-medium
                 rounded-md text-white bg-indigo-600 hover:bg-indigo-700
                 focus:outline-none focus:ring-2 focus:ring-offset-2
                 focus:ring-indigo-500"
-                        >
-                            <span className="absolute left-0 inset-y-0 flex items-center pl-3"></span>
-                            Sign in
-                        </button>
+                                >
+                                    <span className="absolute left-0 inset-y-0 flex items-center pl-3"></span>
+                                    Sign in
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-        </div>
+                </div>
+            )}
+        </>
     );
 }
 

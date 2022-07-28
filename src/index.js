@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <BrowserRouter>
         <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" exact element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/*" element={<App />} />
             <Route path="/addProject" element={<AddProject />} />
