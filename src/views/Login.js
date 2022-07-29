@@ -1,35 +1,50 @@
-import { React, useState, useEffect, useRef } from "react";
-import axios from "axios";
-
-const url = "https://localhost:7274/api/";
-
+import { React, useState, useEffect, useRef, useContext } from "react";
+import axios from "../api/axios";
+import App from "../App";
+import AuthContext from "../context/AuthProvider";
+const LOGIN_URL = "/token";
 function Login() {
     const userRef = useRef();
     const errRef = useRef();
-
+    const { auth, setAuth } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [token, setToken] = useState("");
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+        userRef.current.focus();
+    }, []);
+
+    useEffect(() => {
+        setErrMsg("");
+    }, [email, password]);
 
     const authorize = (e) => {
         e.preventDefault();
         axios
-            .post(url + "token", { email, password })
+            .post(LOGIN_URL, { email, password })
             .then((res) => {
-                setToken(res.data);
-                console.log(res.data);
+                const accessToken = res.data;
+                setAuth({ email, password, accessToken });
                 setSuccess(true);
             })
             .catch((err) => {
-                console.log("Invalid Credentials");
+                if (!err.res) {
+                    console.log("Invalid Credentials");
+                } else if (err.res?.status === 400) {
+                    setErrMsg("Missing Username or Password");
+                } else if (err.res?.status === 401) {
+                    setErrMsg("Unauthorized !!");
+                } else {
+                    setErrMsg("Login Failed");
+                }
             });
     };
     return (
         <>
             {success ? (
-                <h1> You are logged in ! </h1>
+                <App />
             ) : (
                 <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                     <div className="max-w-md w-full space-y-8">
@@ -72,10 +87,11 @@ function Login() {
                                         id="email"
                                         name="email"
                                         autoComplete="email"
+                                        ref={userRef}
                                         onChange={(e) =>
                                             setEmail(e.target.value)
                                         }
-                                        //required
+                                        required
                                         className="appearance-none rounded-none relative block
                   w-full px-3 py-2 border border-gray-300
                   placeholder-gray-500 text-gray-900 rounded-t-md
@@ -96,7 +112,7 @@ function Login() {
                                         name="password"
                                         type="password"
                                         autoComplete="current-password"
-                                        //required
+                                        required
                                         className="appearance-none rounded-none relative block
                   w-full px-3 py-2 border border-gray-300
                   placeholder-gray-500 text-gray-900 rounded-b-md
