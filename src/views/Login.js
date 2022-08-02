@@ -1,4 +1,5 @@
 import { React, useState, useEffect, useRef, useContext } from "react";
+import { Navigate } from "react-router-dom";
 import axios from "../api/axios";
 import App from "../App";
 import AuthContext from "../context/AuthProvider";
@@ -44,7 +45,7 @@ function Login() {
     return (
         <>
             {success ? (
-                <App />
+                <Navigate to="/homePage" />
             ) : (
                 <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                     <div className="max-w-md w-full space-y-8">

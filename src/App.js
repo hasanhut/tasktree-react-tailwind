@@ -1,7 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
-import Content from "./components/Content";
-import Navbar from "./components/Navbar";
 import AuthContext from "./context/AuthProvider";
+import Login from "./views/Login";
 
 function App() {
     const { auth, setAuth } = useContext(AuthContext);
@@ -10,10 +9,7 @@ function App() {
     });
     return (
         <>
-            <Navbar />
-            <div className="wrapper">
-                <Content />
-            </div>
+            <Login />
         </>
     );
 }
