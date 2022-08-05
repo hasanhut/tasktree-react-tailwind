@@ -1,13 +1,12 @@
 import { React, useState, useEffect, useRef, useContext } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "../api/axios";
-import App from "../App";
 import AuthContext from "../context/AuthProvider";
+
 const LOGIN_URL = "/token";
 function Login() {
     const userRef = useRef();
-    const errRef = useRef();
-    const { auth, setAuth } = useContext(AuthContext);
+    const { setAuth } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errMsg, setErrMsg] = useState("");

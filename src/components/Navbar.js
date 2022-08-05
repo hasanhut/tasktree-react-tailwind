@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon } from "../icons";
+import avatar from "../images/avatar.png";
 
 function Navbar() {
     return (
@@ -7,12 +8,24 @@ function Navbar() {
             <a href="#" className="">
                 Projects
             </a>
-            <a
-                href="/addProject"
-                className="hover:bg-pink-700 w-8 rounded-full flex items-center justify-center font-mono"
-            >
-                <Icon name="add" />
-            </a>
+            <div className="flex justify-center">
+                <a
+                    href="/addProject"
+                    className="hover:bg-pink-700 w-8 rounded-full flex items-center justify-center font-mono"
+                >
+                    <Icon name="add" />
+                </a>
+                <a
+                    href="/profile"
+                    className="rounded-full flex items-center justify-center font-mono p-2"
+                >
+                    <img
+                        className="w-10 h-10 rounded-full"
+                        src={avatar}
+                        alt="Avatar"
+                    />
+                </a>
+            </div>
         </nav>
     );
 }

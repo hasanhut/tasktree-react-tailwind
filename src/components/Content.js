@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { Icon } from "../icons";
 import { Menu, Transition } from "@headlessui/react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Content() {
     const [data, setData] = useState(null);
@@ -33,8 +34,8 @@ function Content() {
 
     return (
         <>
-            <a href="/detailed">
-                <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-2">
+                <Link to="/detailed" style={{ display: "contents" }}>
                     {data?.map((item) => (
                         <span
                             key={item.id}
@@ -137,8 +138,8 @@ function Content() {
                             </span>
                         </span>
                     ))}
-                </div>
-            </a>
+                </Link>
+            </div>
         </>
     );
 }

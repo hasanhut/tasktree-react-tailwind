@@ -9,6 +9,7 @@ import { AuthProvider } from "./context/AuthProvider";
 import "flowbite";
 import HomePage from "./views/HomePage";
 import DetailedProject from "./views/DetailedProject";
+import Profile from "./views/Profile";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -20,6 +21,7 @@ root.render(
                 <Route path="/" element={<App />} />
                 <Route path="/addProject" element={<AddProject />} />
                 <Route path="/detailed" element={<DetailedProject />} />
+                <Route path="/profile" element={<Profile />} />
             </Routes>
         </AuthProvider>
     </BrowserRouter>
