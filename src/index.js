@@ -20,7 +20,10 @@ root.render(
                 <Route path="/register" element={<Register />} />
                 <Route path="/" element={<App />} />
                 <Route path="/addProject" element={<AddProject />} />
-                <Route path="/detailed" element={<DetailedProject />} />
+                <Route
+                    path="/project/:projectId"
+                    element={<DetailedProject />}
+                />
                 <Route path="/profile" element={<Profile />} />
             </Routes>
         </AuthProvider>

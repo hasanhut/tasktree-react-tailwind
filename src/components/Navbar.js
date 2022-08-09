@@ -1,6 +1,7 @@
 import React from "react";
 import { Icon } from "../icons";
 import avatar from "../images/avatar.png";
+import { Link } from "react-router-dom";
 
 function Navbar() {
     return (
@@ -15,8 +16,8 @@ function Navbar() {
                 >
                     <Icon name="add" />
                 </a>
-                <a
-                    href="/profile"
+                <Link
+                    to="/profile"
                     className="rounded-full flex items-center justify-center font-mono p-2"
                 >
                     <img
@@ -24,7 +25,7 @@ function Navbar() {
                         src={avatar}
                         alt="Avatar"
                     />
-                </a>
+                </Link>
             </div>
         </nav>
     );

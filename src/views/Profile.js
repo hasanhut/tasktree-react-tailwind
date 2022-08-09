@@ -6,7 +6,13 @@ function Profile() {
     useEffect(() => {
         console.log(auth);
     });
-    return <div>`${auth}`</div>;
+    return (
+        <div>
+            <h1>User Email: {auth.email}</h1>
+            <h1>User Password: {auth.password}</h1>
+            <h1>User Token: {auth.accessToken}</h1>
+        </div>
+    );
 }
 
 export default Profile;

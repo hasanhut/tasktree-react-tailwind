@@ -1,12 +1,7 @@
-import { React, useState, useEffect, useContext } from "react";
-import AuthContext from "./context/AuthProvider";
+import { React } from "react";
 import Login from "./views/Login";
 
 function App() {
-    const { auth, setAuth } = useContext(AuthContext);
-    useEffect(() => {
-        console.log(auth);
-    });
     return (
         <>
             <Login />
