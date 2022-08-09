@@ -3,9 +3,6 @@ import AuthContext from "../context/AuthProvider";
 
 function Profile() {
     const { auth } = useContext(AuthContext);
-    useEffect(() => {
-        console.log(auth);
-    });
     return (
         <div>
             <h1>User Email: {auth.email}</h1>

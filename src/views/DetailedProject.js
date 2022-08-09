@@ -7,9 +7,14 @@ function DetailedProject() {
     const location = useLocation();
     const id = location.state.id;
     const [data, setData] = useState(null);
+    const [taskName, setTaskName] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [assignee, setAssignee] = useState("");
     const { auth, setAuth } = useContext(AuthContext);
     const url = "https://localhost:7274/api/project/";
     const token = auth.accessToken;
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             axios
@@ -21,19 +26,31 @@ function DetailedProject() {
                 .then((res) => {
                     console.log(res.data);
                     setData(res.data);
+                    setLoading(true);
                 });
         };
         fetchData();
     }, []);
+    function createTask() {
+        console.log("create");
+    }
     return (
-        <div>
-            {data?.map((item) => (
-                <div key={item.id}>
-                    <h1>{item.name}</h1>
-                    <h1>{item.explanation}</h1>
+        <>
+            {loading ? (
+                <div>
+                    <h1>Project id :{data.id}</h1>
+                    <h1>Project name :{data.name}</h1>
+                    <h2>Project Explanation :{data.explanation}</h2>
+                    <h2>Project Start Date :{data.startDate}</h2>
+                    <h2>Project End Date :{data.endDate}</h2>
+                    <button onClick={createTask} className="bg-blue-500 p-4">
+                        Create a Task
+                    </button>
                 </div>
-            ))}
-        </div>
+            ) : (
+                <div>Loading</div>
+            )}
+        </>
     );
 }
 

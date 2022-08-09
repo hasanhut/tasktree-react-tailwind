@@ -41,7 +41,7 @@ function Content() {
                 {data?.map((item) => (
                     <>
                         <Link
-                            to="/project/{id}"
+                            to={`/project/${item.id}`}
                             style={{ display: "contents" }}
                             state={{ id: item.id }}
                         >
