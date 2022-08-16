@@ -2,10 +2,12 @@ import { React, useState, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
 import axios from "../api/axios";
+import NewProjectTask from "../components/NewProjectTask";
 
 function DetailedProject() {
     const location = useLocation();
     const id = location.state.id;
+    const [buttonPopup, setButtonPopup] = useState(false);
     const [data, setData] = useState(null);
     const [taskName, setTaskName] = useState("");
     const [startDate, setStartDate] = useState("");
@@ -13,7 +15,6 @@ function DetailedProject() {
     const [assignee, setAssignee] = useState("");
     const { auth, setAuth } = useContext(AuthContext);
     const url = "https://localhost:7274/api/project/";
-    const token = auth.accessToken;
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
@@ -24,16 +25,16 @@ function DetailedProject() {
                     },
                 })
                 .then((res) => {
-                    console.log(res.data);
+                    //console.log(res.data);
                     setData(res.data);
                     setLoading(true);
                 });
         };
         fetchData();
     }, []);
-    function createTask() {
-        console.log("create");
-    }
+    const createTask = () => {
+        console.log(taskName);
+    };
     return (
         <>
             {loading ? (
@@ -43,9 +44,66 @@ function DetailedProject() {
                     <h2>Project Explanation :{data.explanation}</h2>
                     <h2>Project Start Date :{data.startDate}</h2>
                     <h2>Project End Date :{data.endDate}</h2>
-                    <button onClick={createTask} className="bg-blue-500 p-4">
+                    <button
+                        onClick={() => {
+                            setButtonPopup(true);
+                        }}
+                        className="bg-blue-500 p-4"
+                    >
                         Create a Task
                     </button>
+                    <NewProjectTask
+                        trigger={buttonPopup}
+                        setTrigger={setButtonPopup}
+                    >
+                        <form action="">
+                            <div>
+                                <label htmlFor="taskName">Task Name</label>
+                                <input
+                                    type="text"
+                                    id="taskName"
+                                    name="taskName"
+                                    onChange={(e) =>
+                                        setTaskName(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="startDate">
+                                    Task Start Date
+                                </label>
+                                <input
+                                    type="text"
+                                    id="startDate"
+                                    name="startDate"
+                                    onChange={(e) =>
+                                        setStartDate(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="endDate">Task End Date</label>
+                                <input
+                                    type="text"
+                                    id="endDate"
+                                    name="endDate"
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="assignee">assignee</label>
+                                <input
+                                    type="text"
+                                    id="assignee"
+                                    name="assignee"
+                                    onChange={(e) =>
+                                        setAssignee(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <button onClick={createTask}>Create</button>
+                        </form>
+                    </NewProjectTask>
                 </div>
             ) : (
                 <div>Loading</div>
