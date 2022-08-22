@@ -6,7 +6,7 @@ import NewProjectTask from "../components/NewProjectTask";
 
 function DetailedProject() {
     const location = useLocation();
-    const id = 1;
+    const id = location.state.id;
     const [buttonPopup, setButtonPopup] = useState(false);
     const [data, setData] = useState(null);
     const [taskName, setTaskName] = useState("");

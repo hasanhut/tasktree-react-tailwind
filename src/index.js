@@ -10,6 +10,7 @@ import "flowbite";
 import HomePage from "./views/HomePage";
 import DetailedProject from "./views/DetailedProject";
 import Profile from "./views/Profile";
+import ProjectHomePage from "./views/ProjectHomePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,7 +23,7 @@ root.render(
                 <Route path="/addProject" element={<AddProject />} />
                 <Route
                     path="/project/:projectId"
-                    element={<DetailedProject />}
+                    element={<ProjectHomePage />}
                 />
                 <Route path="/profile" element={<Profile />} />
             </Routes>
