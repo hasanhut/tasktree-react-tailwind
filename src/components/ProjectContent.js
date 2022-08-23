@@ -2,23 +2,23 @@ import { React, useEffect, useState } from "react";
 import axios from "../api/axios";
 
 function ProjectContent() {
-    const [data, setData] = useState(null);
+    const [tasks, setTasks] = useState(null);
     const url = "https://localhost:7274/api";
     useEffect(() => {
         const fetchData = async () => {
             axios
-                .get(url + "/projectTask/" + 1, {
+                .get(url + "/projectTask/project/1", {
                     headers: {
                         Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiJjNTkzNTZmMi02MzNkLTQzNjgtOGIwOS0wNzA5M2UzOTNhMTciLCJpYXQiOiI5LjA4LjIwMjIgMDY6MTE6NDIiLCJJZCI6IjIiLCJVc2VybmFtZSI6Imhhc2FuIiwiRW1haWwiOiJoYXNhbkBnbWFpbC5jb20iLCJleHAiOjE2NjYwMjU0NDIsImlzcyI6IkpXVEF1dGhlbnRpY2F0aW9uU2VydmVyIiwiYXVkIjoiSldUU2VydmljZVBvc3RtYW5DbGllbnQifQ.1SUbYhsTde4n1R0knBqoueg1OMzfrxDEBAucX7qDcaQ`,
                     },
                 })
                 .then((res) => {
-                    //console.log(res.data);
-                    setData(res.data);
+                    console.log(res.data);
+                    setTasks(res.data);
                 });
         };
         fetchData();
-    });
+    }, []);
 
     return (
         <div className="flex-auto">
@@ -54,29 +54,34 @@ function ProjectContent() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                {data.id}
-                            </td>
-                            <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                {data.name}
-                            </td>
-                            <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                {data.explanation}
-                            </td>
-                            <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                {data.startDate}
-                            </td>
-                            <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                {data.endDate}
-                            </td>
-                            <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                1
-                            </td>
-                            <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                1
-                            </td>
-                        </tr>
+                        {tasks?.map((task) => (
+                            <tr
+                                key={task.id}
+                                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                            >
+                                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                    {task.id}
+                                </td>
+                                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                    {task.taskName}
+                                </td>
+                                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                    {task.startDate}
+                                </td>
+                                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                    {task.endDate}
+                                </td>
+                                {task.map((option) => (
+                                    <li>{option.assignee.id}</li>
+                                ))}
+                                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                    {task.reporterId}
+                                </td>
+                                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                    {task.projectId}
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
