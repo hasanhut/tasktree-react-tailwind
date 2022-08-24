@@ -3,7 +3,7 @@ import { Icon } from "../icons";
 
 function ProjectSideBar() {
     return (
-        <div className="w-60 bg-gray-100">
+        <div className="w-60 h-screen bg-gray-100">
             <div className="p-3">
                 <ul className="flex flex-col">
                     <li className="mb-2 flex">
