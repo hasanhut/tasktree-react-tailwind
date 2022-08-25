@@ -43,7 +43,7 @@ function Content() {
                         <Link
                             to={`/project/${item.id}`}
                             style={{ display: "contents" }}
-                            state={{ id: item.id }}
+                            state={{ id: item.id, name: item.name }}
                         >
                             <span
                                 key={item.id}

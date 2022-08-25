@@ -8,7 +8,6 @@ import Register from "./views/Register";
 import { AuthProvider } from "./context/AuthProvider";
 import "flowbite";
 import HomePage from "./views/HomePage";
-import DetailedProject from "./views/DetailedProject";
 import Profile from "./views/Profile";
 import ProjectHomePage from "./views/ProjectHomePage";
 
