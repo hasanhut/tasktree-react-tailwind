@@ -49,7 +49,10 @@ function Content() {
                                 key={item.id}
                                 className="m-6 outline outline-1 h-72 w-72 rounded-md"
                             >
-                                <span className="bg-projectgray flex flex-row justify-between p-5 h-16 text-sm text-white font-bold">
+                                <span
+                                    key={item.id}
+                                    className="bg-projectgray flex flex-row justify-between p-5 h-16 text-sm text-white font-bold"
+                                >
                                     <h1> {item.name} </h1>
                                     <Menu
                                         as="div"

@@ -9,9 +9,9 @@ function ProjectContent() {
     const location = useLocation();
     const { id } = location.state;
     const [tasks, setTasks] = useState(null);
+    const [users, setUsers] = useState(null);
     const [statusDoneCount, setStatusDoneCount] = useState();
     const [statusInProgressCount, setStatusInProgressCount] = useState();
-    const [tasksCount, setTasksCount] = useState();
     const [buttonPopup, setButtonPopup] = useState(false);
     const [taskName, setTaskName] = useState("");
     const [startDate, setStartDate] = useState("");
@@ -23,7 +23,9 @@ function ProjectContent() {
     const url = "https://localhost:7274/api";
     useEffect(() => {
         fetchData();
+        fetchUserData();
     });
+
     const fetchData = async () => {
         axios
             .get(url + "/projectTask/project/" + id, {
@@ -34,14 +36,25 @@ function ProjectContent() {
             .then((res) => {
                 //console.log(res.data);
                 setTasks(res.data);
-                setTasksCount(res.data.length);
                 CountStatus();
             });
     };
+    const fetchUserData = async () => {
+        axios
+            .get(url + "/user", {
+                headers: {
+                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiJjNTkzNTZmMi02MzNkLTQzNjgtOGIwOS0wNzA5M2UzOTNhMTciLCJpYXQiOiI5LjA4LjIwMjIgMDY6MTE6NDIiLCJJZCI6IjIiLCJVc2VybmFtZSI6Imhhc2FuIiwiRW1haWwiOiJoYXNhbkBnbWFpbC5jb20iLCJleHAiOjE2NjYwMjU0NDIsImlzcyI6IkpXVEF1dGhlbnRpY2F0aW9uU2VydmVyIiwiYXVkIjoiSldUU2VydmljZVBvc3RtYW5DbGllbnQifQ.1SUbYhsTde4n1R0knBqoueg1OMzfrxDEBAucX7qDcaQ`,
+                },
+            })
+            .then((res) => {
+                //console.log(res.data);
+                setUsers(res.data);
+            });
+    };
     const CountStatus = () => {
-        const done = tasks.filter((item) => item.status === "Done").length;
+        const done = tasks?.filter((item) => item.status === "Done").length;
         setStatusDoneCount(done);
-        const inProgress = tasks.filter(
+        const inProgress = tasks?.filter(
             (item) => item.status === "In Progress"
         ).length;
         setStatusInProgressCount(inProgress);
@@ -163,9 +176,9 @@ function ProjectContent() {
                                 </tr>
                             ))
                         ) : (
-                            <h1 className="py-4 px-6 font-bold text-2xl">
-                                NO DATA
-                            </h1>
+                            <tr className="py-4 px-6 font-bold text-2xl">
+                                <td>NO DATA</td>
+                            </tr>
                         )}
                     </tbody>
                 </table>
@@ -224,13 +237,27 @@ function ProjectContent() {
                         >
                             Assignee
                         </label>
-                        <input
-                            className="w-40 h-7 shadow appearance-none border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        <select
+                            className="w-40 h-9 shadow appearance-none border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             type="text"
                             id="assigneeId"
                             name="assigneeId"
+                            defaultValue={"DEFAULT"}
                             onChange={(e) => setAssigneeId(e.target.value)}
-                        />
+                        >
+                            <option
+                                className="optionGroup"
+                                value="DEFAULT"
+                                disabled
+                            >
+                                Select Assignee
+                            </option>
+                            {users?.map((user) => (
+                                <option key={user.id} value={user.id}>
+                                    {user.username}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="grid justify-items-center mt-4">
                         <label
@@ -239,13 +266,27 @@ function ProjectContent() {
                         >
                             Reporter
                         </label>
-                        <input
-                            className="w-40 h-7 shadow appearance-none border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        <select
+                            className="w-40 h-9 shadow appearance-none border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             type="text"
                             id="reporterId"
                             name="reporterId"
+                            defaultValue={"DEFAULT"}
                             onChange={(e) => setReporterId(e.target.value)}
-                        />
+                        >
+                            <option
+                                className="optionGroup"
+                                value="DEFAULT"
+                                disabled
+                            >
+                                Select Reporter
+                            </option>
+                            {users?.map((user) => (
+                                <option key={user.id} value={user.id}>
+                                    {user.username}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="grid justify-items-center mt-4">
                         <label
